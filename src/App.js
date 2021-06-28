@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+
+import Routes from "./Routes";
 
 const App = (props) => {
   return (
-    <div className="App">
-      <p class="m-8 ">hello world</p>
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 };
 
@@ -16,9 +19,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    user: dispatch.user,
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
