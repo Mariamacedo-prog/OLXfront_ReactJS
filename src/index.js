@@ -11,7 +11,7 @@ const store = createStore(Reducers);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App class="font-Open" />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
