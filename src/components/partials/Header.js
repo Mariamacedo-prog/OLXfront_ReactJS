@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { isLogged } from "../../helpers/AuthHandler";
+import { isLogged, doLogout } from "../../helpers/AuthHandler";
 
 const Header = () => {
   let logged = isLogged();
+
+  const hadleLogout = () => {
+    doLogout();
+    window.location.href = "/";
+  };
 
   return (
     <div className="h-16 bg-white border-2 border-solid border-gray-300">
@@ -24,7 +29,7 @@ const Header = () => {
                   <Link to="/my-account">Minha Conta</Link>
                 </li>
                 <li className="mx-5 hover:text-gray-600">
-                  <Link to="/logout">Sair</Link>
+                  <button onClick={hadleLogout}>Sair</button>
                 </li>
 
                 <li className="mx-5">
