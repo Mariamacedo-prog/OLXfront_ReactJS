@@ -23,6 +23,7 @@ const SignIn = () => {
       doLogin(json.token, rememberPassword);
       window.location.href = "/";
     }
+    setDisabled(false);
   };
 
   //Style do tailwind geral da page
