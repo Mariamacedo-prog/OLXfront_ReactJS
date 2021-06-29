@@ -9,7 +9,7 @@ import Routes from "./Routes";
 const App = (props) => {
   return (
     <BrowserRouter>
-      <div class="bg-gray-100 ">
+      <div className="bg-gray-100 ">
         <Header />
 
         <Routes />
