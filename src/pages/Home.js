@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
+import AdItem from "../components/partials/AdItem";
 
 const Home = () => {
   const api = useApi();
-  const [stateList, setStateList] = useState("");
-  const [categories, setCategories] = useState("");
+  const [stateList, setStateList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [adList, setAdList] = useState([]);
 
   useEffect(() => {
     const getStates = async () => {
@@ -23,6 +25,17 @@ const Home = () => {
     };
 
     getCategories();
+  }, []);
+
+  useEffect(() => {
+    const getRecentAds = async () => {
+      const json = await api.getAds({
+        sort: "desc",
+        limit: 8,
+      });
+      setAdList(json.ads);
+    };
+    getRecentAds();
   }, []);
 
   return (
@@ -70,7 +83,24 @@ const Home = () => {
         </div>
       </div>
       <div className="bg-gray-100 max-w-screen-lg m-auto ">
-        <h1>...</h1>
+        <h2 className="text-2xl font-bold py-3.5">Anúncios recentes</h2>
+        <div className="flex flex-wrap">
+          {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
+        </div>
+        <Link to="/ads" className="font-bold my-3 inline-block">
+          Ver todos
+        </Link>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. It has survived not only
+          five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.
+        </p>
       </div>
     </>
   );
