@@ -6,6 +6,10 @@ module.exports = {
       Open: ["Open Sans", "ui-sans-serif"],
     },
     extend: {},
+    backgroundColor: (theme) => ({
+      ...theme("colors"),
+      Verde: "#9bb83c",
+    }),
   },
   variants: {
     extend: {},
