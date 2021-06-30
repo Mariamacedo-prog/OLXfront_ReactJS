@@ -55,11 +55,6 @@ const OLXApi = {
 
     return json;
   },
-  getStates: async () => {
-    const json = await apiFetchGet("/states");
-
-    return json.states;
-  },
   register: async (name, stateLoc, email, password) => {
     const json = await apiFetchPost("/user/singup", {
       name,
@@ -69,6 +64,16 @@ const OLXApi = {
     });
 
     return json;
+  },
+  getStates: async () => {
+    const json = await apiFetchGet("/states");
+
+    return json.states;
+  },
+  getCategories: async () => {
+    const json = await apiFetchGet("/categories");
+
+    return json.categories;
   },
 };
 
