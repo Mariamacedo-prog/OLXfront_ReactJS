@@ -84,7 +84,7 @@ const Home = () => {
       </div>
       <div className="bg-gray-100 max-w-screen-lg m-auto ">
         <h2 className="text-2xl font-bold py-3.5">Anúncios recentes</h2>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap ">
           {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
         </div>
         <Link to="/ads" className="font-bold my-3 inline-block">
