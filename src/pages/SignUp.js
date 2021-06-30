@@ -28,15 +28,23 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisabled(true);
-    /*
-    const json = await api.login(email, password);
+    setErrors("");
+
+    if (password !== confirmPassword) {
+      setErrors("Senhas não batem.");
+      setDisabled(false);
+      return;
+    }
+
+    const json = await api.register(name, stateLoc, email, password);
 
     if (json.error) {
       setErrors(json.error);
     } else {
-      doLogin(json.token, rememberPassword);
+      doLogin(json.token);
       window.location.href = "/";
-    }*/
+    }
+
     setDisabled(false);
   };
 

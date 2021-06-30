@@ -60,6 +60,16 @@ const OLXApi = {
 
     return json.states;
   },
+  register: async (name, stateLoc, email, password) => {
+    const json = await apiFetchPost("/user/singup", {
+      name,
+      state: stateLoc,
+      email,
+      password,
+    });
+
+    return json;
+  },
 };
 
 export default () => OLXApi;

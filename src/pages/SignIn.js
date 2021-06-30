@@ -14,7 +14,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisabled(true);
-
+    setErrors("");
     const json = await api.login(email, password);
 
     if (json.error) {
