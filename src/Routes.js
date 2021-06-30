@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 
 
@@ -17,6 +18,9 @@ export default () => {
       </Route>
       <Route exact path="/signin">
         <SignIn />
+      </Route>
+       <Route exact path="/signup">
+        <SignUp />
       </Route>
       
       <Route>
