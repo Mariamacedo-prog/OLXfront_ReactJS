@@ -13,7 +13,7 @@ export default (props) => {
   return (
     <div className="w-3/12">
       <Link
-        to={`/ads/${props.data.id}`}
+        to={`/ad/${props.data.id}`}
         className="block border-white bg-white border-solid border-2 m-2 p-3 rounded transition delay-100 duration-100 hover:border-gray-300 "
       >
         <div>
