@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 import useApi from "../helpers/OLXApi";
 
 const AdPage = () => {
   const api = useApi();
   const [loadding, setLoadding] = useState(true);
-  const [adInfo, setAdInfor] = useState({});
+  const [adInfo, setAdInfo] = useState({});
   const { id } = useParams();
 
   const formatDate = (date) => {
@@ -34,9 +36,9 @@ const AdPage = () => {
   };
 
   useEffect(() => {
-    const getAdItem = async () => {
+    const getAdItem = async (id) => {
       const json = await api.getAd(id, true);
-      setAdInfor(json);
+      setAdInfo(json);
       setLoadding(false);
     };
     getAdItem(id);
@@ -45,16 +47,35 @@ const AdPage = () => {
   return (
     <div className="bg-gray-100 max-w-screen-lg m-auto flex mt-5">
       <div className="flex-1 mr-3">
-        <div className="bg-white mb-3 shadow-new rounded">
-          <div>{loadding && <div className="h-72 bg-gray-300"></div>}</div>
-          <div className=" p-4">
+        <div className="bg-white mb-3 shadow-new rounded flex">
+          <div className="w-80 h-80">
+            {loadding && <div className="h-72 bg-gray-300"></div>}
+
+            {adInfo.images && (
+              <Slide>
+                {adInfo.images.map((img, k) => (
+                  <div
+                    key={k}
+                    clasName="flex items-center justify-center h-80 bg-cover"
+                  >
+                    <img src={img} alt="" />
+                  </div>
+                ))}
+              </Slide>
+            )}
+          </div>
+
+          <div className=" p-4 flex-1">
             <div>
               {loadding && <div className="h-6 mb-3 bg-gray-300"></div>}
               {adInfo.title && (
-                <h2 className="text-2xl font-bold py-3.5">{adInfo.title}</h2>
+                <h2 className="text-2xl font-bold mt-2">{adInfo.title}</h2>
               )}
               {adInfo.dateCreated && (
-                <small> Criado em {formatDate(adInfo.dateCreated)}</small>
+                <small className="text-gray-400">
+                  {" "}
+                  Criado em {formatDate(adInfo.dateCreated)}
+                </small>
               )}
             </div>
             <div>
@@ -64,7 +85,11 @@ const AdPage = () => {
                   {adInfo.description}
                 </div>
               )}
-              {adInfo.views && <small>Visualizações: {adInfo.views}</small>}
+              {adInfo.views && (
+                <small className="text-gray-400">
+                  Visualizações: {adInfo.views}
+                </small>
+              )}
             </div>
           </div>
         </div>
