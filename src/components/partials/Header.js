@@ -34,7 +34,7 @@ const Header = () => {
 
                 <li className="mx-5">
                   <Link
-                    to="/post-un-ad"
+                    to="/post-an-ad"
                     className="px-2 py-2 rounded bg-yellow-600 text-white transition duration-200 hover:bg-yellow-700"
                   >
                     Poste um anúncio
