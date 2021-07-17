@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useApi from "../helpers/OLXApi";
 import { doLogin } from "../helpers/AuthHandler";
 
 const AddAd = () => {
   const fileField = useRef();
+  const [categories, setCategories] = useState([]);
+
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
@@ -14,6 +16,15 @@ const AddAd = () => {
   const [errors, setErrors] = useState("");
 
   const api = useApi();
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const cats = await api.getCategories();
+      setCategories(cats);
+    };
+
+    getCategories();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +77,20 @@ const AddAd = () => {
               Categoria
             </div>
             <div className="flex-1">
-              <select className={inputStyle}></select>
+              <select
+                className={inputStyle}
+                disabled={disabled}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                <option></option>
+                {categories &&
+                  categories.map((i) => (
+                    <option k={i._id} value={i._id}>
+                      {i.name}
+                    </option>
+                  ))}
+              </select>
             </div>
           </label>
 
