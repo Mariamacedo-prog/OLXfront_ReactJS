@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import useApi from "../helpers/OLXApi";
-import { doLogin } from "../helpers/AuthHandler";
+import MaskedInput from "react-text-mask";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 const AddAd = () => {
   const fileField = useRef();
@@ -41,13 +42,21 @@ const AddAd = () => {
     setDisabled(false);
   };
 
+  const priceMask = createNumberMask({
+    prefix: "R$ ",
+    includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: ".",
+    allowDecimal: true,
+    decimalSymbol: ",",
+  });
+
   //Style do tailwind geral da page
   const inputStyle =
     "w-full text-lg p-1 border-solid border-2 border-gray-300 rounded outline-none focus:border-gray-400 transition delay-150 duration-300";
 
   return (
     <div className="bg-gray-100 max-w-screen-lg m-auto ">
-      <h1 className="text-4xl font-bold p-3.5">Adicionar anúncio</h1>
+      <h1 className="text-4xl font-bold p-3.5">Postar um anúncio</h1>
       <div>
         {errors && (
           <div className="my-2.5 p-2.5 border-solid border-red-700 border-2 bg-red-300 ">
@@ -96,7 +105,16 @@ const AddAd = () => {
 
           <label className="flex items-center p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-right">Preço</div>
-            <div>...</div>
+            <div className="flex-1">
+              <MaskedInput
+                mask={priceMask}
+                className={inputStyle}
+                placeholder="R$ "
+                disabled={disabled || priceNegotiable}
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
           </label>
 
           <label className="flex items-center p-3.5 max-w-screen-sm">
