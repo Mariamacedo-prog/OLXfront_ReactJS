@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
 import MaskedInput from "react-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 const AddAd = () => {
   const fileField = useRef();
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
 
   const [title, setTitle] = useState("");
@@ -31,14 +33,42 @@ const AddAd = () => {
     e.preventDefault();
     setDisabled(true);
     setErrors("");
-    /* const json = await api.login(email, password);
+    let errors = [];
 
-    if (json.error) {
-      setErrors(json.error);
+    if (!title.trim()) {
+      errors.push("Sem título");
+    }
+
+    if (!category) {
+      errors.push("Sem categoria");
+    }
+
+    if (errors.length === 0) {
+      const fData = new FormData();
+      fData.append("title", title);
+      fData.append("cat", category);
+      fData.append("price", price);
+      fData.append("priceneg", priceNegotiable);
+      fData.append("desc", desc);
+
+      if (fileField.current.files.length > 0) {
+        for (let i = 0; i < fileField.current.files.length; i++) {
+          fData.append("img", fileField.current.files[i]);
+        }
+      }
+
+      const json = await api.addAd(fData);
+
+      if (!json.error) {
+        history.push(`/ad/${json.id}`);
+        return;
+      } else {
+        setErrors(json.error);
+      }
     } else {
-      doLogin(json.token, rememberPassword);
-      window.location.href = "/";
-    }*/
+      setErrors(errors.join("\n"));
+    }
+
     setDisabled(false);
   };
 
@@ -72,7 +102,7 @@ const AddAd = () => {
             <div className="flex-1">
               <input
                 className={inputStyle}
-                type="email"
+                type="text"
                 disabled={disabled}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
