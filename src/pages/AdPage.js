@@ -171,7 +171,10 @@ const AdPage = () => {
               Outras ofertas do vendedor
             </h2>
 
-            <div className="flex" onClick={() => window.location.reload()}>
+            <div
+              className="flex flex-wrap"
+              onClick={() => window.location.reload()}
+            >
               {adInfo.others.map((i, k) => (
                 <AdItem key={k} data={i} />
               ))}
