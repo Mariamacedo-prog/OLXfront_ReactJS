@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
-import AdItem from "../components/partials/AdItem";
 
 const Ads = () => {
   const api = useApi();
+
+  const useQueryString = () => {
+    return new URLSearchParams(useLocation().search);
+  };
+  const query = useQueryString();
+
+  const [q, setQ] = useState(query.get("q") != null ? query.get("q") : "");
+  const [cat, setCat] = useState(
+    query.get("cat") != null ? query.get("cat") : ""
+  );
+  const [state, setState] = useState(
+    query.get("state") != null ? query.get("state") : ""
+  );
+
   const [stateList, setStateList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [adList, setAdList] = useState([]);
@@ -44,10 +57,20 @@ const Ads = () => {
         <div className=" max-w-screen-lg m-auto flex">
           <div className="w-60 mr-1">
             <form method="GET">
-              <input type="text" name="q" />
+              <input
+                type="text"
+                name="q"
+                placeholder="O que você procura?"
+                className="w-full h-10 px-4 rounded border-Verde border-2 outline-none"
+                value={q}
+              />
 
-              <div>Estado:</div>
-              <select name="state">
+              <div className="my-2.5">Estado:</div>
+              <select
+                name="state"
+                value={state}
+                className="w-full h-10 px-4 rounded border-Verde border-2 outline-none "
+              >
                 <option></option>
                 {stateList &&
                   stateList.map((i, k) => (
@@ -57,18 +80,23 @@ const Ads = () => {
                   ))}
               </select>
 
-              <div>
-                Categoria:
-                <ul>
-                  {categories &&
-                    categories.map((i, k) => (
-                      <li key={k}>
-                        <img src={i.img} alt={i.name} />
-                        <span>{i.name}</span>
-                      </li>
-                    ))}
-                </ul>
-              </div>
+              <div className="my-2.5">Categoria:</div>
+              <ul>
+                {categories &&
+                  categories.map((i, k) => (
+                    <li
+                      key={k}
+                      className={
+                        cat === i.slug
+                          ? "flex items-center cursor-pointer bg-Verde text-white w-full h-10 px-4 rounded"
+                          : "flex items-center cursor-pointer hover:bg-Verde hover:text-white w-full h-10 px-4 rounded"
+                      }
+                    >
+                      <img src={i.img} alt={i.name} className="w-6 h-6 mr-2" />
+                      <span>{i.name}</span>
+                    </li>
+                  ))}
+              </ul>
             </form>
           </div>
           <div className="flex-1">...</div>

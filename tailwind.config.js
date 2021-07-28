@@ -13,6 +13,11 @@ module.exports = {
     boxShadow: {
       new: "0 0 4px #999",
     },
+    borderColor: (theme) => ({
+      ...theme("colors"),
+      DEFAULT: theme("colors.gray.300", "currentColor"),
+      Verde: "#9bb83c",
+    }),
   },
   variants: {
     extend: {},
