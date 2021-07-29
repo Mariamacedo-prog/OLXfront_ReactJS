@@ -4,6 +4,7 @@ import useApi from "../helpers/OLXApi";
 
 const Ads = () => {
   const api = useApi();
+  const history = useHistory();
 
   const useQueryString = () => {
     return new URLSearchParams(useLocation().search);
@@ -21,6 +22,23 @@ const Ads = () => {
   const [stateList, setStateList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [adList, setAdList] = useState([]);
+
+  useEffect(() => {
+    const queryString = [];
+    if (q) {
+      queryString.push(`q=${q}`);
+    }
+    if (cat) {
+      queryString.push(`cat=${cat}`);
+    }
+    if (state) {
+      queryString.push(`state=${state}`);
+    }
+
+    history.replace({
+      search: `?${queryString.join("&")}`,
+    });
+  }, [q, cat, state, history]);
 
   useEffect(() => {
     const getStates = async () => {
@@ -63,6 +81,7 @@ const Ads = () => {
                 placeholder="O que você procura?"
                 className="w-full h-10 px-4 rounded border-Verde border-2 outline-none"
                 value={q}
+                onChange={(e) => setQ(e.target.value)}
               />
 
               <div className="my-2.5">Estado:</div>
@@ -70,6 +89,7 @@ const Ads = () => {
                 name="state"
                 value={state}
                 className="w-full h-10 px-4 rounded border-Verde border-2 outline-none "
+                onChange={(e) => setState(e.target.value)}
               >
                 <option></option>
                 {stateList &&
@@ -91,6 +111,7 @@ const Ads = () => {
                           ? "flex items-center cursor-pointer bg-Verde text-white w-full h-10 px-4 rounded"
                           : "flex items-center cursor-pointer hover:bg-Verde hover:text-white w-full h-10 px-4 rounded"
                       }
+                      onClick={() => setCat(i.slug)}
                     >
                       <img src={i.img} alt={i.name} className="w-6 h-6 mr-2" />
                       <span>{i.name}</span>
