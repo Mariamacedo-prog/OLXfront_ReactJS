@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
+import AdItem from "../components/partials/AdItem";
+
+let timer;
 
 const Ads = () => {
   const api = useApi();
@@ -22,6 +25,22 @@ const Ads = () => {
   const [stateList, setStateList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [adList, setAdList] = useState([]);
+  const [opacity, setOpacity] = useState(100);
+
+  const getAdsList = async () => {
+    const getRecentAds = async () => {
+      const json = await api.getAds({
+        sort: "desc",
+        limit: 12,
+        q,
+        cat,
+        state,
+      });
+      setAdList(json.ads);
+    };
+    setOpacity(100);
+    getRecentAds();
+  };
 
   useEffect(() => {
     const queryString = [];
@@ -38,6 +57,13 @@ const Ads = () => {
     history.replace({
       search: `?${queryString.join("&")}`,
     });
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(getAdsList, 2000);
+    setOpacity(30);
   }, [q, cat, state, history]);
 
   useEffect(() => {
@@ -120,7 +146,12 @@ const Ads = () => {
               </ul>
             </form>
           </div>
-          <div className="flex-1">...</div>
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold px-3.5">Resultados: </h2>
+            <div className={`flex flex-wrap opacity-${opacity}`}>
+              {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
+            </div>
+          </div>
         </div>
       </div>
     </>
