@@ -26,8 +26,11 @@ const Ads = () => {
   const [categories, setCategories] = useState([]);
   const [adList, setAdList] = useState([]);
   const [opacity, setOpacity] = useState(100);
+  const [loading, setLoading] = useState(true);
 
   const getAdsList = async () => {
+    setLoading(true);
+
     const getRecentAds = async () => {
       const json = await api.getAds({
         sort: "desc",
@@ -40,6 +43,8 @@ const Ads = () => {
     };
     setOpacity(100);
     getRecentAds();
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -146,8 +151,16 @@ const Ads = () => {
               </ul>
             </form>
           </div>
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold px-3.5">Resultados: </h2>
+          <div className="flex-1 flex flex-col">
+            <h2 className="text-2xl font-bold px-3.5">Resultados:</h2>
+            {loading && (
+              <div className="text-2xl p-3.5 self-center">Carregando...</div>
+            )}
+            {!loading && adList.length === 0 && (
+              <div className="text-2xl p-3.5 self-center">
+                Não encontrado nenhum resultado.
+              </div>
+            )}
             <div className={`flex flex-wrap opacity-${opacity}`}>
               {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
             </div>
