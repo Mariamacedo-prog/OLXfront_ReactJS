@@ -27,6 +27,8 @@ const Ads = () => {
   const [adList, setAdList] = useState([]);
   const [opacity, setOpacity] = useState(100);
   const [loading, setLoading] = useState(true);
+  const [pageTotal, setPageTotal] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
 
   const getAdsList = async () => {
     setLoading(true);
@@ -34,18 +36,28 @@ const Ads = () => {
     const getRecentAds = async () => {
       const json = await api.getAds({
         sort: "desc",
-        limit: 12,
+        limit: 2,
         q,
         cat,
         state,
       });
       setAdList(json.ads);
+      setPageTotal(json.total);
     };
+
     setOpacity(100);
     getRecentAds();
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (adList.length > 0) {
+      setPageCount(Math.ceil(pageTotal / adList.length));
+    } else {
+      setPageCount(0);
+    }
+  }, [pageTotal]);
 
   useEffect(() => {
     const queryString = [];
@@ -99,6 +111,12 @@ const Ads = () => {
     };
     getRecentAds();
   }, []);
+
+  let pagination = [];
+
+  for (let i = 1; i <= pageCount; i++) {
+    pagination.push(i);
+  }
 
   return (
     <>
@@ -163,6 +181,16 @@ const Ads = () => {
             )}
             <div className={`flex flex-wrap opacity-${opacity}`}>
               {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
+            </div>
+            <div className="flex items-center justify-center my-3">
+              {pagination.map((i, k) => (
+                <div
+                  key={k}
+                  className="flex items-center justify-center w-9 h-9 border-2 mr-1"
+                >
+                  {i}
+                </div>
+              ))}
             </div>
           </div>
         </div>
