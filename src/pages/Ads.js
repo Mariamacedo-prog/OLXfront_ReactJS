@@ -29,17 +29,21 @@ const Ads = () => {
   const [loading, setLoading] = useState(true);
   const [pageTotal, setPageTotal] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getAdsList = async () => {
     setLoading(true);
 
+    let offset = (currentPage - 1) * 4;
+
     const getRecentAds = async () => {
       const json = await api.getAds({
         sort: "desc",
-        limit: 2,
+        limit: 4,
         q,
         cat,
         state,
+        offset,
       });
       setAdList(json.ads);
       setPageTotal(json.total);
@@ -58,6 +62,11 @@ const Ads = () => {
       setPageCount(0);
     }
   }, [pageTotal]);
+
+  useEffect(() => {
+    setOpacity(30);
+    getAdsList();
+  }, [currentPage]);
 
   useEffect(() => {
     const queryString = [];
@@ -81,6 +90,7 @@ const Ads = () => {
 
     timer = setTimeout(getAdsList, 2000);
     setOpacity(30);
+    setCurrentPage(1);
   }, [q, cat, state, history]);
 
   useEffect(() => {
@@ -171,7 +181,7 @@ const Ads = () => {
           </div>
           <div className="flex-1 flex flex-col">
             <h2 className="text-2xl font-bold px-3.5">Resultados:</h2>
-            {loading && (
+            {loading && adList.length === 0 && (
               <div className="text-2xl p-3.5 self-center">Carregando...</div>
             )}
             {!loading && adList.length === 0 && (
@@ -186,7 +196,12 @@ const Ads = () => {
               {pagination.map((i, k) => (
                 <div
                   key={k}
-                  className="flex items-center justify-center w-9 h-9 border-2 mr-1"
+                  onClick={() => setCurrentPage(i)}
+                  className={
+                    i === currentPage
+                      ? "flex items-center justify-center w-9 h-9 border mr-1 bg-gray-400"
+                      : "flex items-center justify-center w-9 h-9 border mr-1 cursor-pointer border-black hover:border-gray-600"
+                  }
                 >
                   {i}
                 </div>
