@@ -131,7 +131,7 @@ const Ads = () => {
   return (
     <>
       <div className="bg-gray-200 py-5 border-b-2 border-solid border-gray-300">
-        <div className=" max-w-screen-lg m-auto flex">
+        <div className=" max-w-screen-lg m-auto flex ">
           <div className="w-60 mr-1">
             <form method="GET">
               <input
