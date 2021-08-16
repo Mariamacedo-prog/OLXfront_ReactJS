@@ -29,6 +29,34 @@ const apiFetchPost = async (endpoint, body) => {
 
   return json;
 };
+
+const apiFetchPut = async (endpoint, body) => {
+  if (!body.token) {
+    let token = Cookie.get("token");
+    if (token) {
+      body.token = token;
+    }
+  }
+
+  const res = await fetch(BASEAPI + endpoint, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const json = await res.json();
+
+  if (json.notallowed) {
+    window.location.href = "/signin";
+    return;
+  }
+
+  return json;
+};
+
 const apiFetchGet = async (endpoint, body = []) => {
   if (!body.token) {
     let token = Cookie.get("token");
@@ -109,6 +137,30 @@ const OLXApi = {
   },
   addAd: async (fData) => {
     const json = await apiFetchFile("/ad/add", fData);
+
+    return json;
+  },
+  userInfo: async (token) => {
+    const json = await apiFetchGet("/user/me", token);
+
+    return json;
+  },
+  updateUserInfo: async (name, email, state, password) => {
+    let newInfo = {};
+    if (name !== "") {
+      newInfo.name = name;
+    }
+    if (email !== "") {
+      newInfo.email = email;
+    }
+    if (state !== "") {
+      newInfo.state = state;
+    }
+    if (password !== "") {
+      newInfo.password = password;
+    }
+
+    const json = await apiFetchPut("/user/me", newInfo);
 
     return json;
   },
