@@ -5,18 +5,20 @@ import MaskedInput from "react-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import Modal from "../components/partials/Modal";
 
-const AddAd = () => {
+const MyAccont = () => {
   const fileField = useRef();
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [stateList, setStateList] = useState([]);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [category, setCategory] = useState("");
-  const [priceNegotiable, setPriceNegotiable] = useState(false);
-  const [price, setPrice] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [errors, setErrors] = useState("");
+
+  const [adStatus, setAdStatus] = useState("true");
+  const [price, setPrice] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [priceNegotiable, setPriceNegotiable] = useState(false);
 
   const [userInformation, setUserInformation] = useState({});
   const [state, setState] = useState("");
@@ -77,21 +79,28 @@ const AddAd = () => {
     setErrors("");
     let errors = [];
 
-    if (!title.trim()) {
-      errors.push("Sem título");
-    }
-
-    if (!category) {
-      errors.push("Sem categoria");
-    }
-
     if (errors.length === 0) {
       const fData = new FormData();
-      fData.append("title", title);
-      fData.append("cat", category);
-      fData.append("price", price);
+
+      if (title !== "") {
+        fData.title = ("title", title);
+      }
+      if (price !== "") {
+        fData.append("price", price);
+      }
+      if (adStatus !== "true") {
+        fData.append("status", adStatus);
+      }
+
+      if (category !== "") {
+        fData.append("cat", category);
+      }
+
       fData.append("priceneg", priceNegotiable);
-      fData.append("desc", desc);
+
+      if (description !== "") {
+        fData.append("desc", description);
+      }
 
       if (fileField.current.files.length > 0) {
         for (let i = 0; i < fileField.current.files.length; i++) {
@@ -99,10 +108,10 @@ const AddAd = () => {
         }
       }
 
-      const json = await api.addAd(fData);
+      const json = await api.updateAd(fData, editIndex);
 
       if (!json.error) {
-        history.push(`/ad/${json.id}`);
+        history.push(`/`);
         return;
       } else {
         setErrors(json.error);
@@ -112,6 +121,16 @@ const AddAd = () => {
     }
 
     setDisabled(false);
+  };
+
+  console.log(priceNegotiable);
+
+  const handleNegotiable = (e) => {
+    if (e.target.value === "Sim") {
+      setPriceNegotiable(true);
+    } else {
+      setPriceNegotiable(false);
+    }
   };
 
   const priceMask = createNumberMask({
@@ -124,7 +143,7 @@ const AddAd = () => {
 
   //Style do tailwind geral da page
   const inputStyle =
-    "w-full text-lg p-1 border-solid border-2 border-gray-300 rounded outline-none focus:border-gray-400 transition delay-150 duration-300";
+    "w-full text-sm p-1 border-solid border-2 border-gray-300 rounded outline-none focus:border-gray-400 transition delay-150 duration-300";
 
   return (
     <div className="bg-gray-100 max-w-screen-lg m-auto ">
@@ -219,169 +238,192 @@ const AddAd = () => {
         <h2 className="text-2xl font-bold py-3.5">Seus anúncios:</h2>
         <div className="flex flex-wrap">
           {userInformation.ads &&
-            userInformation.ads.map((i, k) => (
-              <div key={k}>
-                <div
-                  onClick={() => setIsOpen(true)}
-                  className=" w-40 flex flex-col border-white bg-white border-solid border-2 m-2 p-3 rounded transition delay-100 duration-100"
-                >
-                  <h1 className="font-bold text-sm">{i._doc.title}</h1>
-                  {i._doc.images.length > 0 ? (
-                    i._doc.images.map(
-                      (i, k) =>
-                        i.default === true && (
-                          <img
-                            key={k}
-                            src={`http://localhost:3001/media/${i.url}`}
-                            className="w-full rounded"
-                            alt=""
-                          />
+            userInformation.ads.map(
+              (i, k) =>
+                i._doc.status !== "false" && (
+                  <div key={k}>
+                    <div className=" w-40 flex flex-col border-white bg-white border-solid border-2 m-2 p-3 rounded transition delay-100 duration-100">
+                      <h1 className="font-bold text-sm">{i._doc.title}</h1>
+                      {i._doc.images.length > 0 ? (
+                        i._doc.images.map(
+                          (i, k) =>
+                            i.default === true && (
+                              <img
+                                key={k}
+                                src={`http://localhost:3001/media/${i.url}`}
+                                className="w-full rounded"
+                                alt=""
+                              />
+                            )
                         )
-                    )
-                  ) : (
-                    <img
-                      src="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg"
-                      className="w-full rounded"
-                      alt=""
-                    />
-                  )}
+                      ) : (
+                        <img
+                          src="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg"
+                          className="w-full rounded"
+                          alt=""
+                        />
+                      )}
+                      <div onClick={() => setIsOpen(true)} className="flex">
+                        <button
+                          onClick={() =>
+                            setEditIndex((editIndex) =>
+                              editIndex === i._doc._id ? null : i._doc._id
+                            )
+                          }
+                          className=" flex-1 my-2 px-1 py-1 rounded text-sm bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
+                        >
+                          Editar
+                        </button>
+                      </div>
+                    </div>
 
-                  <button
-                    onClick={() =>
-                      setEditIndex((editIndex) =>
-                        editIndex === i._doc._id ? null : i._doc._id
-                      )
-                    }
-                    className=" my-2 px-1 py-1 rounded text-sm bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
-                  >
-                    Editar
-                  </button>
-                </div>
-                {editIndex === i._doc._id && (
-                  <Modal
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    user={i}
-                  >
-                    <form className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300">
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Título
-                        </div>
-                        <div className="flex-1">
-                          <input
-                            className={inputStyle}
-                            type="text"
-                            disabled={disabled}
-                            defaultValue={i._doc.title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                          />
-                        </div>
-                      </label>
+                    {editIndex === i._doc._id && (
+                      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+                        <form
+                          className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300"
+                          onSubmit={handleSubmit}
+                        >
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Título
+                            </div>
+                            <div className="flex-1">
+                              <input
+                                className={inputStyle}
+                                type="text"
+                                disabled={disabled}
+                                value={title === "" ? i._doc.title : title}
+                                onChange={(e) => setTitle(e.target.value)}
+                              />
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Categoria
-                        </div>
-                        <div className="flex-1">
-                          <select
-                            className={inputStyle}
-                            disabled={disabled}
-                            onChange={(e) => setCategory(e.target.value)}
-                            required
-                          >
-                            <option></option>
-                            {categories &&
-                              categories.map((i) => (
-                                <option k={i._id} value={i._id}>
-                                  {i.name}
-                                </option>
-                              ))}
-                          </select>
-                        </div>
-                      </label>
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Categoria
+                            </div>
+                            <div className="flex-1">
+                              <select
+                                className={inputStyle}
+                                disabled={disabled}
+                                value={category === "" ? i.category : category}
+                                onChange={(e) => setCategory(e.target.value)}
+                              >
+                                {categories &&
+                                  categories.map((i, k) => (
+                                    <option key={k} value={i.slug}>
+                                      {i.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Preço
-                        </div>
-                        <div className="flex-1">
-                          <MaskedInput
-                            mask={priceMask}
-                            className={inputStyle}
-                            placeholder="R$ "
-                            disabled={disabled || priceNegotiable}
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                          />
-                        </div>
-                      </label>
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Preço
+                            </div>
+                            <div className="flex-1">
+                              <MaskedInput
+                                mask={priceMask}
+                                className={inputStyle}
+                                placeholder="R$ "
+                                disabled={disabled || priceNegotiable === true}
+                                defaultValue={i._doc.price}
+                                onChange={(e) => setPrice(e.target.value)}
+                              />
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Preço negociável
-                        </div>
-                        <div className="flex-1">
-                          <input
-                            type="checkbox"
-                            disabled={disabled}
-                            checked={priceNegotiable}
-                            onChange={() =>
-                              setPriceNegotiable(!priceNegotiable)
-                            }
-                          />
-                        </div>
-                      </label>
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Preço negociável
+                            </div>
+                            <div className="flex-1">
+                              <input
+                                type="radio"
+                                name="priceNeg"
+                                value="Sim"
+                                onClick={handleNegotiable}
+                              />{" "}
+                              Sim
+                              <input
+                                type="radio"
+                                name="priceNeg"
+                                value="Não"
+                                onClick={handleNegotiable}
+                              />{" "}
+                              Não
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Descrição
-                        </div>
-                        <div className="flex-1">
-                          <textarea
-                            className={`${inputStyle} h-40 resize-none`}
-                            disabled={disabled}
-                            value={desc}
-                            onChange={(e) => setDesc(e.target.value)}
-                          ></textarea>
-                        </div>
-                      </label>
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Descrição
+                            </div>
+                            <div className="flex-1">
+                              <textarea
+                                className={`${inputStyle} h-32 resize-none`}
+                                disabled={disabled}
+                                value={
+                                  description === ""
+                                    ? i._doc.description
+                                    : description
+                                }
+                                onChange={(e) => setDescription(e.target.value)}
+                              ></textarea>
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right">
-                          Imagens(1 ou mais)
-                        </div>
-                        <div className="flex-1">
-                          <input
-                            type="file"
-                            disabled={disabled}
-                            ref={fileField}
-                            multiple
-                          />
-                        </div>
-                      </label>
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                              Imagens(1 ou mais)
+                            </div>
+                            <div className="flex-1">
+                              <input
+                                type="file"
+                                disabled={disabled}
+                                ref={fileField}
+                                multiple
+                              />
+                            </div>
+                          </label>
 
-                      <label className="flex items-center p-3.5 max-w-screen-sm">
-                        <div className="w-48 pr-5 font-bold text-lg text-right"></div>
-                        <div className="flex-1">
-                          <button
-                            className="px-2 py-1 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
-                            disabled={disabled}
-                          >
-                            Adicionar anúncio
-                          </button>
-                        </div>
-                      </label>
-                    </form>
-                  </Modal>
-                )}
-              </div>
-            ))}
+                          <label className="flex p-3.5 ">
+                            <div className="flex px-2 rounded text-base bg-red-600 text-white transition duration-200 hover:bg-red-700 ">
+                              Inativar Anúncio
+                              <div className="flex-1">
+                                <input
+                                  type="checkbox"
+                                  className="ml-3"
+                                  disabled={disabled}
+                                  onChange={() => setAdStatus("false")}
+                                />
+                              </div>
+                            </div>
+                          </label>
+
+                          <label className="flex items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-right"></div>
+                            <div className="flex-1">
+                              <button
+                                className="px-2 py-1 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
+                                disabled={disabled}
+                              >
+                                Atualizar anúncio
+                              </button>
+                            </div>
+                          </label>
+                        </form>
+                      </Modal>
+                    )}
+                  </div>
+                )
+            )}
         </div>
       </div>
     </div>
   );
 };
 
-export default AddAd;
+export default MyAccont;

@@ -56,7 +56,6 @@ const apiFetchPut = async (endpoint, body) => {
 
   return json;
 };
-
 const apiFetchGet = async (endpoint, body = []) => {
   if (!body.token) {
     let token = Cookie.get("token");
@@ -161,6 +160,11 @@ const OLXApi = {
     }
 
     const json = await apiFetchPut("/user/me", newInfo);
+
+    return json;
+  },
+  updateAd: async (fData, editIndex) => {
+    const json = await apiFetchFile(`/ad/${editIndex}`, fData);
 
     return json;
   },
