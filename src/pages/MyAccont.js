@@ -95,7 +95,6 @@ const MyAccont = () => {
       if (category !== "") {
         fData.append("cat", category);
       }
-
       fData.append("priceneg", priceNegotiable);
 
       if (description !== "") {
