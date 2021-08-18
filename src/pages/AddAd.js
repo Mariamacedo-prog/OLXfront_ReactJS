@@ -97,7 +97,7 @@ const AddAd = () => {
           className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300"
           onSubmit={handleSubmit}
         >
-          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
               Título
             </div>
@@ -113,7 +113,7 @@ const AddAd = () => {
             </div>
           </label>
 
-          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
               Categoria
             </div>
@@ -135,7 +135,7 @@ const AddAd = () => {
             </div>
           </label>
 
-          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
               Preço
             </div>
@@ -151,7 +151,7 @@ const AddAd = () => {
             </div>
           </label>
 
-          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
               Preço negociável
             </div>
@@ -165,7 +165,7 @@ const AddAd = () => {
             </div>
           </label>
 
-          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
               Descrição
             </div>

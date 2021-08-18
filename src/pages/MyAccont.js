@@ -83,7 +83,7 @@ const MyAccont = () => {
       const fData = new FormData();
 
       if (title !== "") {
-        fData.title = ("title", title);
+        fData.append("title", title);
       }
       if (price !== "") {
         fData.append("price", price);
@@ -122,8 +122,6 @@ const MyAccont = () => {
 
     setDisabled(false);
   };
-
-  console.log(priceNegotiable);
 
   const handleNegotiable = (e) => {
     if (e.target.value === "Sim") {
@@ -354,7 +352,7 @@ const MyAccont = () => {
                               <input
                                 type="radio"
                                 name="priceNeg"
-                                value="Sim"
+                                value="Não"
                                 onClick={handleNegotiable}
                               />{" "}
                               Não
