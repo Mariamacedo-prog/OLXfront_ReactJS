@@ -131,8 +131,8 @@ const Ads = () => {
   return (
     <>
       <div className="bg-gray-200 py-5 border-b-2 border-solid border-gray-300">
-        <div className=" max-w-screen-lg m-auto flex ">
-          <div className="w-60 mr-1">
+        <div className=" max-w-screen-lg m-auto flex sm:flex-row flex-col ">
+          <div className="sm:w-60 mr-1 w-auto">
             <form method="GET">
               <input
                 type="text"
@@ -160,15 +160,15 @@ const Ads = () => {
               </select>
 
               <div className="my-2.5">Categoria:</div>
-              <ul>
+              <ul className="flex flex-wrap sm:block">
                 {categories &&
                   categories.map((i, k) => (
                     <li
                       key={k}
                       className={
                         cat === i.slug
-                          ? "flex items-center cursor-pointer bg-Verde text-white w-full h-10 px-4 rounded"
-                          : "flex items-center cursor-pointer hover:bg-Verde hover:text-white w-full h-10 px-4 rounded"
+                          ? "flex items-center cursor-pointer bg-Verde text-white w-2/4 sm:w-full h-10 px-4 rounded"
+                          : "flex items-center cursor-pointer hover:bg-Verde hover:text-white w-2/4 sm:w-full h-10 px-4 rounded"
                       }
                       onClick={() => setCat(i.slug)}
                     >
@@ -180,7 +180,7 @@ const Ads = () => {
             </form>
           </div>
           <div className="flex-1 flex flex-col">
-            <h2 className="text-2xl font-bold px-3.5">Resultados:</h2>
+            <h2 className="text-2xl font-bold  sm:py-0 p-3.5 ">Resultados:</h2>
             {loading && adList.length === 0 && (
               <div className="text-2xl p-3.5 self-center">Carregando...</div>
             )}

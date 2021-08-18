@@ -43,8 +43,10 @@ const SignIn = () => {
           className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300"
           onSubmit={handleSubmit}
         >
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">E-mail</div>
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
+              E-mail
+            </div>
             <div className="flex-1">
               <input
                 className={inputStyle}
@@ -57,8 +59,10 @@ const SignIn = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">Senha</div>
+          <label className="flex flex-col sm:flex-row   w-full  sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right ">
+              Senha
+            </div>
             <div className="flex-1">
               <input
                 className={inputStyle}
@@ -71,8 +75,8 @@ const SignIn = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">
+          <label className="flex  sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 sm:pr-5 font-bold text-lg text-left sm:text-right">
               Lembrar senha
             </div>
             <div className="flex-1">
@@ -85,11 +89,11 @@ const SignIn = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right"></div>
-            <div className="flex-1">
+          <label className="flex flex-col sm:flex-row items-center p-3.5 max-w-screen-sm">
+            <div className="sm:w-48  pr-5 font-bold text-lg text-right"></div>
+            <div className="flex-1  w-full">
               <button
-                className="px-2 py-1 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
+                className="px-2 py-1 w-full sm:w-48 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
                 disabled={disabled}
               >
                 Fazer Login

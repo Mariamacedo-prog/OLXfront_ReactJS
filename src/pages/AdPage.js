@@ -49,7 +49,7 @@ const AdPage = () => {
     <>
       {adInfo.category && (
         <div className="max-w-screen-lg m-auto flex mt-5 ">
-          <p className="font-bold">
+          <p className="font-bold text-sm sm:text-base px-6 sm:px-0">
             Você está aqui:
             <Link to="/" className="hover:text-blue-700">
               {" "}
@@ -74,10 +74,10 @@ const AdPage = () => {
         </div>
       )}
 
-      <div className="bg-gray-100 max-w-screen-lg m-auto flex mt-5">
-        <div className="flex-1 mr-3">
-          <div className="bg-white mb-3 shadow-new rounded flex">
-            <div className="w-80 h-80">
+      <div className="bg-gray-100 max-w-screen-lg m-auto flex mt-5 sm:flex-row flex-col">
+        <div className="flex-1  m-auto sm:m-0 sm:mr-3">
+          <div className="bg-white mb-3 shadow-new rounded flex w-80 sm:w-full sm:flex-row flex-col">
+            <div className="w-80 h-80 ">
               {loadding && <div className="h-72 bg-gray-300"></div>}
 
               {adInfo.images && (
@@ -94,7 +94,7 @@ const AdPage = () => {
               )}
             </div>
 
-            <div className=" p-4 flex-1">
+            <div className=" sm:p-4 flex-1 p-6 ">
               <div>
                 {loadding && <div className="h-6 mb-3 bg-gray-300"></div>}
                 {adInfo.title && (
@@ -123,8 +123,8 @@ const AdPage = () => {
           </div>
         </div>
 
-        <div className="w-60">
-          <div className="bg-white mb-3 shadow-new rounded p-3">
+        <div className="sm:w-60 m-auto sm:m-0 w-80">
+          <div className="bg-white mb-3 shadow-new rounded p-3 ">
             {loadding && <div className="h-6 bg-gray-300"></div>}
             {adInfo.priceNegotiable && <div>Preço negociável</div>}
             {!adInfo.priceNegotiable && adInfo.price && (
@@ -164,10 +164,10 @@ const AdPage = () => {
         </div>
       </div>
 
-      <div className="bg-gray-100 max-w-screen-lg m-auto flex mt-5">
+      <div className="bg-gray-100 max-w-screen-lg m-auto flex mt-5 ">
         {adInfo.others && (
-          <div className="flex-col">
-            <h2 className="text-xl font-bold mt-2">
+          <div className="flex-col ">
+            <h2 className="text-xl font-bold mx-5">
               Outras ofertas do vendedor
             </h2>
 

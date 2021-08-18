@@ -159,8 +159,10 @@ const MyAccont = () => {
           className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300"
           onSubmit={handleUserInfo}
         >
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">Nome: </div>
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg  text-left sm:text-right">
+              Nome:{" "}
+            </div>
             <div className="flex-1">
               <input
                 type="text"
@@ -173,8 +175,10 @@ const MyAccont = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">Email:</div>
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg  text-left sm:text-right">
+              Email:
+            </div>
             <div className="flex-1">
               <input
                 type="text"
@@ -187,8 +191,8 @@ const MyAccont = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg  text-left sm:text-right">
               Estado atual {userInformation.state}:
             </div>
             <select
@@ -207,8 +211,8 @@ const MyAccont = () => {
             </select>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="w-48 pr-5 font-bold text-lg  text-left sm:text-right">
               Nova senha:
             </div>
             <div className="flex-1">
@@ -222,11 +226,11 @@ const MyAccont = () => {
             </div>
           </label>
 
-          <label className="flex items-center p-3.5 max-w-screen-sm">
-            <div className="w-48 pr-5 font-bold text-lg text-right"></div>
-            <div className="flex-1">
+          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+            <div className="sm:w-48 pr-5 font-bold text-lg  text-left sm:text-right"></div>
+            <div className="flex-1  w-full">
               <button
-                className="px-2 py-1 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
+                className="px-2 py-1 rounded  w-full sm:w-48 text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
                 disabled={disabled}
               >
                 Atualizar informações
@@ -280,11 +284,11 @@ const MyAccont = () => {
                     {editIndex === i._doc._id && (
                       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
                         <form
-                          className="bg-white rounded shadow-2xl p-3.5 border-2 border-gray-300"
+                          className="bg-white rounded shadow-2xl sm:p-3.5 border-2 border-gray-300"
                           onSubmit={handleSubmit}
                         >
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Título
                             </div>
                             <div className="flex-1">
@@ -298,8 +302,8 @@ const MyAccont = () => {
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Categoria
                             </div>
                             <div className="flex-1">
@@ -319,8 +323,8 @@ const MyAccont = () => {
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Preço
                             </div>
                             <div className="flex-1">
@@ -335,8 +339,8 @@ const MyAccont = () => {
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Preço negociável
                             </div>
                             <div className="flex-1">
@@ -350,15 +354,15 @@ const MyAccont = () => {
                               <input
                                 type="radio"
                                 name="priceNeg"
-                                value="Não"
+                                value="Sim"
                                 onClick={handleNegotiable}
                               />{" "}
                               Não
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center sm:p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Descrição
                             </div>
                             <div className="flex-1">
@@ -375,8 +379,8 @@ const MyAccont = () => {
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
+                            <div className="w-48 pr-5 font-bold text-lg text-left sm:text-right">
                               Imagens(1 ou mais)
                             </div>
                             <div className="flex-1">
@@ -403,11 +407,11 @@ const MyAccont = () => {
                             </div>
                           </label>
 
-                          <label className="flex items-center p-3.5 max-w-screen-sm">
-                            <div className="w-48 pr-5 font-bold text-lg text-right"></div>
-                            <div className="flex-1">
+                          <label className="flex flex-col w-full sm:flex-row sm:items-center p-2 max-w-screen-sm">
+                            <div className="sm:w-48 pr-5 font-bold text-lg text-left sm:text-right"></div>
+                            <div className="flex-1 w-full">
                               <button
-                                className="px-2 py-1 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
+                                className="px-2 py-1 w-full sm:w-48 rounded text-lg bg-blue-600 text-white transition duration-200 hover:bg-blue-700 "
                                 disabled={disabled}
                               >
                                 Atualizar anúncio
