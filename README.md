@@ -48,4 +48,5 @@
 
 # Sobre as tecnologias:
   Backend: Feito com NodeJS e também está disponível no GitHub!
+  
   Frontend: Feito com ReactJS e TailwindCSS.
