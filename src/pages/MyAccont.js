@@ -251,7 +251,7 @@ const MyAccont = () => {
                             i.default === true && (
                               <img
                                 key={k}
-                                src={`http://localhost:3001/media/${i.url}`}
+                                src={`http://alunos.b7web.com.br:501/media/${i.url}`}
                                 className="w-full rounded"
                                 alt=""
                               />

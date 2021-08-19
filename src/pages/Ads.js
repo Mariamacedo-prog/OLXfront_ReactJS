@@ -34,12 +34,12 @@ const Ads = () => {
   const getAdsList = async () => {
     setLoading(true);
 
-    let offset = (currentPage - 1) * 4;
+    let offset = (currentPage - 1) * 16;
 
     const getRecentAds = async () => {
       const json = await api.getAds({
         sort: "desc",
-        limit: 4,
+        limit: 16,
         q,
         cat,
         state,
@@ -192,7 +192,7 @@ const Ads = () => {
             <div className={`flex flex-wrap opacity-${opacity}`}>
               {adList && adList.map((i, k) => <AdItem key={k} data={i} />)}
             </div>
-            <div className="flex items-center justify-center my-3">
+            <div className="flex items-center justify-center my-3 flex-wrap">
               {pagination.map((i, k) => (
                 <div
                   key={k}
