@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "babel src -d lib",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
