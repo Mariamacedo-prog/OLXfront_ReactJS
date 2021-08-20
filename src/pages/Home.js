@@ -16,7 +16,7 @@ const Home = () => {
     };
 
     getStates();
-  }, [api]);
+  }, []);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -25,7 +25,7 @@ const Home = () => {
     };
 
     getCategories();
-  }, [api]);
+  }, []);
 
   useEffect(() => {
     const getRecentAds = async () => {
@@ -36,7 +36,7 @@ const Home = () => {
       setAdList(json.ads);
     };
     getRecentAds();
-  }, [api]);
+  }, []);
 
   return (
     <>

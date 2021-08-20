@@ -61,12 +61,12 @@ const Ads = () => {
     } else {
       setPageCount(0);
     }
-  }, [pageTotal]);
+  }, [pageTotal, adList.length]);
 
   useEffect(() => {
     setOpacity(30);
     getAdsList();
-  }, [currentPage]);
+  }, [currentPage, getAdsList]);
 
   useEffect(() => {
     const queryString = [];
@@ -91,7 +91,7 @@ const Ads = () => {
     timer = setTimeout(getAdsList, 2000);
     setOpacity(30);
     setCurrentPage(1);
-  }, [q, cat, state, history]);
+  }, [q, cat, state, history, getAdsList]);
 
   useEffect(() => {
     const getStates = async () => {
