@@ -43,8 +43,9 @@ const AdPage = () => {
       setLoadding(false);
     };
     getAdItem(id);
-  }, []);
+  }, [api, id]);
 
+  console.log(adInfo);
   return (
     <>
       {adInfo.category && (
