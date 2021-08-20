@@ -16,7 +16,7 @@ const Home = () => {
     };
 
     getStates();
-  }, []);
+  }, [api]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -25,7 +25,7 @@ const Home = () => {
     };
 
     getCategories();
-  }, []);
+  }, [api]);
 
   useEffect(() => {
     const getRecentAds = async () => {
@@ -36,7 +36,7 @@ const Home = () => {
       setAdList(json.ads);
     };
     getRecentAds();
-  }, []);
+  }, [api]);
 
   return (
     <>
@@ -45,7 +45,7 @@ const Home = () => {
           <div className="bg-Verde rounded-md shadow-lg flex py-5 px-4">
             <form
               method="GET"
-              action="ads"
+              action="/ads"
               className="flex flex-1 flex-col sm:flex-row"
             >
               <input
