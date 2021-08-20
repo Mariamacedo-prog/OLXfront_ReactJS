@@ -251,7 +251,7 @@ const MyAccont = () => {
                             i.default === true && (
                               <img
                                 key={k}
-                                src={`http://alunos.b7web.com.br:501/media/${i.url}`}
+                                src={`https://olx1clone.herokuapp.com/media/${i.url}`}
                                 className="w-full rounded"
                                 alt=""
                               />

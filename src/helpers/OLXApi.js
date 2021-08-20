@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 import qs from "qs";
 
-const BASEAPI = "http://alunos.b7web.com.br:501";
+const BASEAPI = "https://olx1clone.herokuapp.com";
 
 const apiFetchPost = async (endpoint, body) => {
   if (!body.token) {
