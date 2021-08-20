@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
 import AdItem from "../components/partials/AdItem";
@@ -31,7 +31,7 @@ const Ads = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getAdsList = async () => {
+  const getAdsList = useCallback(async () => {
     setLoading(true);
 
     let offset = (currentPage - 1) * 16;
@@ -53,7 +53,7 @@ const Ads = () => {
     getRecentAds();
 
     setLoading(false);
-  };
+  }, [api, cat, q, state, currentPage]);
 
   useEffect(() => {
     if (adList.length > 0) {
@@ -91,7 +91,7 @@ const Ads = () => {
     timer = setTimeout(getAdsList, 2000);
     setOpacity(30);
     setCurrentPage(1);
-  }, [q, cat, state, history, getAdsList]);
+  }, [q, cat, state, history]);
 
   useEffect(() => {
     const getStates = async () => {
