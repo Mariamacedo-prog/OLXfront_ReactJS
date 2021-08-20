@@ -8,6 +8,7 @@ const apiFetchPost = async (endpoint, body) => {
     let token = Cookie.get("token");
     if (token) {
       body.token = token;
+      console.log(token);
     }
   }
 
@@ -61,6 +62,7 @@ const apiFetchGet = async (endpoint, body = []) => {
     let token = Cookie.get("token");
     if (token) {
       body.token = token;
+      console.log(token);
     }
   }
 
@@ -80,6 +82,7 @@ const apiFetchFile = async (endpoint, body) => {
     let token = Cookie.get("token");
     if (token) {
       body.append("token", token);
+      console.log(token);
     }
   }
 
@@ -139,26 +142,11 @@ const OLXApi = {
 
     return json;
   },
-  userInfo: async (token) => {
-    const json = await apiFetchGet("/user/me", token);
-
+  userInfo: async () => {
+    const json = await apiFetchGet("/user/me");
     return json;
   },
-  updateUserInfo: async (name, email, state, password) => {
-    let newInfo = {};
-    if (name !== "") {
-      newInfo.name = name;
-    }
-    if (email !== "") {
-      newInfo.email = email;
-    }
-    if (state !== "") {
-      newInfo.state = state;
-    }
-    if (password !== "") {
-      newInfo.password = password;
-    }
-
+  updateUserInfo: async (newInfo) => {
     const json = await apiFetchPut("/user/me", newInfo);
 
     return json;

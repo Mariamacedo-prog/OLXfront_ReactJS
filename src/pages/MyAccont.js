@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import useApi from "../helpers/OLXApi";
 import MaskedInput from "react-text-mask";
@@ -37,7 +37,8 @@ const MyAccont = () => {
     };
 
     getUserInformation();
-  }, []);
+  }, [api]);
+
   console.log(userInformation);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const MyAccont = () => {
     };
 
     getCategories();
-  }, []);
+  }, [api]);
 
   useEffect(() => {
     const getStates = async () => {
@@ -56,14 +57,29 @@ const MyAccont = () => {
     };
 
     getStates();
-  }, []);
+  }, [api]);
 
   const handleUserInfo = async (e) => {
     e.preventDefault();
     setDisabled(true);
     setErrors("");
 
-    const json = await api.updateUserInfo(name, email, state, password);
+    let newInfo = {};
+
+    if (name !== "") {
+      newInfo.name = name;
+    }
+    if (email !== "") {
+      newInfo.email = email;
+    }
+    if (state !== "") {
+      newInfo.state = state;
+    }
+    if (password !== "") {
+      newInfo.password = password;
+    }
+
+    const json = await api.updateUserInfo(newInfo);
 
     if (json.error) {
       setErrors(json.error);
@@ -164,9 +180,9 @@ const MyAccont = () => {
               <input
                 type="text"
                 name="name"
+                defaultValue={userInformation.name}
                 disabled={disabled}
                 className={inputStyle}
-                defaultValue={userInformation.name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -180,9 +196,9 @@ const MyAccont = () => {
               <input
                 type="text"
                 name="email"
+                defaultValue={userInformation.email}
                 disabled={disabled}
                 className={inputStyle}
-                defaultValue={userInformation.email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -190,18 +206,16 @@ const MyAccont = () => {
 
           <label className="flex flex-col w-full sm:flex-row sm:items-center p-3.5 max-w-screen-sm">
             <div className="w-48 pr-5 font-bold text-lg  text-left sm:text-right">
-              Estado atual {userInformation.state}:
+              Estado :
             </div>
-            <select
-              name="state"
-              className="w-20 text-lg p-1 border-solid border-2 border-gray-300 rounded outline-none focus:border-gray-400 transition delay-150 duration-300"
-              defaultValue={userInformation.state}
-              onChange={(e) => setState(e.target.value)}
-            >
-              <option></option>
+            <select name="state" onChange={(e) => setState(e.target.value)}>
               {stateList &&
                 stateList.map((i, k) => (
-                  <option key={k} value={i._id}>
+                  <option
+                    key={k}
+                    value={i._id}
+                    selected={i.name === userInformation.state}
+                  >
                     {i.name}
                   </option>
                 ))}
