@@ -35,7 +35,7 @@ export default () => {
         <AddAd />
       </RouteHandler>
 
-      <RouteHandler exact path="/ads">
+      <RouteHandler path="/ads">
         <Ads />
       </RouteHandler>
 
