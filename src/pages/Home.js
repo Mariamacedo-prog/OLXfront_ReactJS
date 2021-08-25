@@ -66,7 +66,7 @@ const Home = () => {
                     </option>
                   ))}
               </select>
-              <button className="bg-blue-400 h-10 px-5 text-white rounded-md hover:bg-blue-500 transition duration-150">
+              <button type="submit" className="bg-blue-400 h-10 px-5 text-white rounded-md hover:bg-blue-500 transition duration-150">
                 Pesquisar
               </button>
             </form>
