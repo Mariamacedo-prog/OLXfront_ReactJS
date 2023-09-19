@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 import qs from "qs";
 
-const BASEAPI = "https://olx1clone.herokuapp.com";
+const BASEAPI = "https://olx-back-node-js.vercel.app";
 
 const apiFetchPost = async (endpoint, body) => {
   if (!body.token) {
